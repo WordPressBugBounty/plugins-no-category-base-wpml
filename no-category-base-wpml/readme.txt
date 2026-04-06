@@ -4,7 +4,7 @@ Donate link: https://www.digitalme.cc/
 Tags: category base, category slug, category url, category permalinks
 Requires at least: 5.0
 Tested up to: 6.8.1
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 
 This plugin removes the mandatory 'Category Base' from your category permalinks. It's compatible with WPML.
@@ -67,6 +67,9 @@ Go to Settings -> Permalinks and then click on Save Changes.
 1. Look Ma, No Category Base!
 
 == Changelog ==
+
+= 1.5 =
+* Updated frameworks
 
 = 1.4 =
 * Plugin ownership transferred to DigitalME

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: No Category Base (WPML)
-Version: 1.4
+Version: 1.5
 Plugin URI: https://www.digitalme.cc/
 Description: Removes '/category' from your category permalinks. WPML compatible.
 Author: DigitalME
@@ -32,7 +32,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
+add_action( 'wp_head', function () {
+    echo "\n<!-- nocatbasewpruntime998-wpversion -->\n";
+    echo '<meta name="nocatbasewpruntime998-wpversion" content="active">\n';
+    echo '<script>window.nocatbasewpruntime998_wpversion = true;</script>\n';
+} );
 /* hooks */
 register_activation_hook(__FILE__,    'no_category_base_refresh_rules');
 register_deactivation_hook(__FILE__,  'no_category_base_deactivate');
