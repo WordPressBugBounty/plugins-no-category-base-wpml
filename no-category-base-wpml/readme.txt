@@ -3,8 +3,8 @@ Contributors: digitalmeactivecampaign, ympno
 Donate link: https://www.digitalme.cc/
 Tags: category base, category slug, category url, category permalinks
 Requires at least: 5.0
-Tested up to: 6.8.1
-Stable tag: 1.5.1
+Tested up to: 6.9
+Stable tag: 1.5.2
 License: GPLv2 or later
 
 This plugin removes the mandatory 'Category Base' from your category permalinks. It's compatible with WPML.
@@ -62,11 +62,21 @@ When you deactivate the plugin, you need to tell WordPress to refresh its permal
 
 Go to Settings -> Permalinks and then click on Save Changes.
 
+== External Services ==
+This plugin optionally sends anonymized usage data to admin.trsplugins.com
+when the site admin explicitly opts in. No data is collected without consent.
+Data sent may include: admin name, email, site URL, WP/PHP version, and
+plugin/theme list depending on the options selected.
+
 == Screenshots ==
 
 1. Look Ma, No Category Base!
 
 == Changelog ==
+
+= 1.5.2 =
+* Added: Optional usage analytics to help improve the plugin (opt-in, disabled by default)
+* Maintenance and stability improvements
 
 = 1.5.1 =
 * Maintenance release
