@@ -1,10 +1,11 @@
 === No Category Base (WPML) ===
 Contributors: digitalmeactivecampaign, ympno
-Donate link: https://www.digitalme.cc/
+Plugin URI: https://nocatwp.com
+Donate link: https://nocatwp.com
 Tags: category base, category slug, category url, category permalinks
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2 or later
 
 This plugin removes the mandatory 'Category Base' from your category permalinks. It's compatible with WPML.
@@ -14,6 +15,8 @@ This plugin removes the mandatory 'Category Base' from your category permalinks.
 As the name suggests this plugin will completely remove the mandatory 'Category Base' from your category permalinks ( e.g. 'mysite.com/category/my-category/' to 'mysite.com/my-category/' ).
 
 The plugin requires no setup or modifying core wordpress files and will not break any links. It will also take care of redirecting your old category links to the new ones.
+
+By [TRS Plugins](https://trsplugins.com/) | [Docs](https://demo.nocatwp.com) | [Privacy Policy](https://trsplugins.com/privacy-policy/)
 
 = Features =
 
@@ -27,6 +30,13 @@ The plugin requires no setup or modifying core wordpress files and will not brea
 8. Works with multiple sub-categories.
 9. Works with WordPress Multisite.
 10. Redirects old category permalinks to the new ones (301 redirect, good for SEO).
+
+= Compatible With =
+
+* WooCommerce
+* Elementor
+* SureCart
+* EasyCart
 
 == Installation ==
 
@@ -63,16 +73,23 @@ When you deactivate the plugin, you need to tell WordPress to refresh its permal
 Go to Settings -> Permalinks and then click on Save Changes.
 
 == External Services ==
-This plugin optionally sends anonymized usage data to admin.trsplugins.com
+This plugin optionally sends usage data to TRS Plugins
 when the site admin explicitly opts in. No data is collected without consent.
 Data sent may include: admin name, email, site URL, WP/PHP version, and
 plugin/theme list depending on the options selected.
+Privacy policy: https://trsplugins.com/privacy-policy/
 
 == Screenshots ==
 
 1. Look Ma, No Category Base!
 
 == Changelog ==
+
+= 1.5.3 =
+* Updated: Plugin homepage and branding to TRS Plugins
+* Added: Privacy policy link
+* Added: Compatibility notes for WooCommerce, Elementor, SureCart, and EasyCart
+* Maintenance and stability improvements
 
 = 1.5.2 =
 * Added: Optional usage analytics to help improve the plugin (opt-in, disabled by default)

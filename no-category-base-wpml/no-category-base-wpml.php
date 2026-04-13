@@ -1,33 +1,28 @@
 <?php
 /*
 Plugin Name: No Category Base (WPML)
-Version: 1.5.2
-Plugin URI: https://www.digitalme.cc/
+Version: 1.5.3
+Plugin URI: https://nocatwp.com
 Description: Removes '/category' from your category permalinks. WPML compatible.
-Author: DigitalME
-Author URI: https://www.digitalme.cc/
+Author: TRS Plugins
+Author URI: https://trsplugins.com/
 License: GPLv2 or later
 Text Domain: no-category-base-wpml
 */
-
 /*
-Copyright 2025 DigitalME (email:hello@digitalme.cc)
+Copyright 2025 TRS Plugins
 Copyright 2015 Marios Alexandrou
 Copyright 2011 Mines (email: hi@mines.io)
 Copyright 2008 Saurabh Gupta (email: saurabh0@gmail.com)
-
 Based on the work by Saurabh Gupta (email : saurabh0@gmail.com)
-
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -36,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 define( 'NCBW_FILE',    __FILE__ );
 define( 'NCBW_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'NCBW_URL',     plugin_dir_url( __FILE__ ) );
-define( 'NCBW_VERSION', '1.5.2' );
+define( 'NCBW_VERSION', '1.5.3' );
 
 /* Opt-in */
 require_once NCBW_DIR . 'includes/class-optin.php';
@@ -48,10 +43,32 @@ add_action( 'plugins_loaded', function() {
 register_activation_hook(__FILE__,    'no_category_base_refresh_rules');
 register_activation_hook(__FILE__,    'ncbw_optin_on_activation');
 register_deactivation_hook(__FILE__,  'no_category_base_deactivate');
+add_action( 'upgrader_process_complete', 'ncbw_optin_on_upgrade', 10, 2 );
 
 function ncbw_optin_on_activation() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-optin.php';
 	NCBW_Optin::instance()->on_activation();
+}
+
+function ncbw_optin_on_upgrade( $upgrader, $hook_extra ) {
+	if ( empty( $hook_extra['action'] ) || 'update' !== $hook_extra['action'] ) {
+		return;
+	}
+
+	if ( empty( $hook_extra['type'] ) || 'plugin' !== $hook_extra['type'] ) {
+		return;
+	}
+
+	$updated_plugins = array();
+	if ( ! empty( $hook_extra['plugins'] ) && is_array( $hook_extra['plugins'] ) ) {
+		$updated_plugins = $hook_extra['plugins'];
+	} elseif ( ! empty( $hook_extra['plugin'] ) ) {
+		$updated_plugins = array( $hook_extra['plugin'] );
+	}
+
+	if ( in_array( plugin_basename( __FILE__ ), $updated_plugins, true ) ) {
+		ncbw_optin_on_activation();
+	}
 }
 
 /* actions */
@@ -214,6 +231,7 @@ function ncbw_enqueue_admin_assets( $hook ) {
 function ncbw_get_admin_tabs() {
 	$tabs = array(
 		'settings' => __( 'Settings', 'no-category-base-wpml' ),
+		'help'     => __( 'Help', 'no-category-base-wpml' ),
 	);
 
 	if ( ! ncbw_is_pro_active() ) {
@@ -275,6 +293,9 @@ function ncbw_render_admin_page() {
 					case 'settings':
 						ncbw_render_tab_settings();
 						break;
+					case 'help':
+						ncbw_render_tab_help();
+						break;
 					case 'upgrade':
 						ncbw_render_tab_upgrade();
 						break;
@@ -317,6 +338,31 @@ function ncbw_render_tab_settings() {
 				<?php esc_html_e( 'Flush Rewrite Rules', 'no-category-base-wpml' ); ?>
 			</a>
 		</p>
+	</div>
+	<?php
+}
+
+/**
+ * Help tab with tutorial and demo links.
+ */
+function ncbw_render_tab_help() {
+	?>
+	<div class="ncbw-card">
+		<h2><?php esc_html_e( 'Documentation & Tutorial', 'no-category-base-wpml' ); ?></h2>
+		<p><?php esc_html_e( 'Use the live demo to review the plugin flow, check the settings layout, and share a guided walkthrough with customers.', 'no-category-base-wpml' ); ?></p>
+		<p>
+			<a href="https://demo.nocatwp.com/" target="_blank" rel="noopener noreferrer" class="button button-primary">
+				<?php esc_html_e( 'Open Demo / Tutorial', 'no-category-base-wpml' ); ?>
+			</a>
+		</p>
+	</div>
+	<div class="ncbw-card">
+		<h2><?php esc_html_e( 'Quick Help', 'no-category-base-wpml' ); ?></h2>
+		<ul style="list-style:disc;padding-left:20px;">
+			<li><?php esc_html_e( 'Activate the plugin and save permalinks once if category routes were cached before activation.', 'no-category-base-wpml' ); ?></li>
+			<li><?php esc_html_e( 'The free version removes the default WordPress category base from category archive URLs.', 'no-category-base-wpml' ); ?></li>
+			<li><?php esc_html_e( 'Use the live demo above when you need a visual product walkthrough.', 'no-category-base-wpml' ); ?></li>
+		</ul>
 	</div>
 	<?php
 }
