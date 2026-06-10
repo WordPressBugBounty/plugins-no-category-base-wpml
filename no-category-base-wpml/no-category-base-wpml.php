@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: No Category Base (WPML)
-Version: 1.5.5
+Version: 1.5.6
 Plugin URI: https://nocatwp.com
 Description: Removes '/category' from your category permalinks. WPML compatible.
 Author: TRS Plugins
@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 define( 'NCBW_FILE',    __FILE__ );
 define( 'NCBW_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'NCBW_URL',     plugin_dir_url( __FILE__ ) );
-define( 'NCBW_VERSION', '1.5.5' );
+define( 'NCBW_VERSION', '1.5.6' );
 
 /* Opt-in */
 require_once NCBW_DIR . 'includes/class-optin.php';
@@ -83,6 +83,7 @@ add_action('admin_enqueue_scripts', 'ncbw_enqueue_admin_assets');
 add_filter('category_rewrite_rules', 'no_category_base_rewrite_rules');
 add_filter('query_vars',             'no_category_base_query_vars');    // Adds 'category_redirect' query variable
 add_filter('request',                'no_category_base_request');       // Redirects if 'category_redirect' is set
+add_filter('term_link',              'no_category_base_term_link', 10, 3); // Fixes View links in admin
 
 function no_category_base_refresh_rules() {
 	global $wp_rewrite;
@@ -178,6 +179,34 @@ function no_category_base_request($query_vars) {
 	}
 
 	return $query_vars;
+}
+
+/**
+ * Fixes category "View" links in the WP admin (e.g. edit-tags.php).
+ *
+ * WordPress builds these URLs via get_term_link(), which uses the raw
+ * permastruct and does not go through the rewrite rules — so /category/
+ * would still appear even though the plugin strips it on the frontend.
+ * This filter removes the base from any category URL at generation time,
+ * covering both admin and frontend contexts.
+ *
+ * @param string  $url      The term URL.
+ * @param WP_Term $term     The term object.
+ * @param string  $taxonomy The taxonomy slug.
+ *
+ * @return string
+ */
+function no_category_base_term_link( $url, $term, $taxonomy ) {
+	if ( 'category' !== $taxonomy ) {
+		return $url;
+	}
+
+	$old_base = get_option( 'category_base' ) ? get_option( 'category_base' ) : 'category';
+	$old_base = trim( $old_base, '/' );
+
+	$url = preg_replace( '#/' . preg_quote( $old_base, '#' ) . '/#', '/', $url, 1 );
+
+	return $url;
 }
 
 /* =========================================================
