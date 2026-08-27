@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: No Category Base (WPML)
-Version: 1.5.6
+Version: 1.5.7
 Plugin URI: https://nocatwp.com
 Description: Removes '/category' from your category permalinks. WPML compatible.
 Author: TRS Plugins
@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 define( 'NCBW_FILE',    __FILE__ );
 define( 'NCBW_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'NCBW_URL',     plugin_dir_url( __FILE__ ) );
-define( 'NCBW_VERSION', '1.5.6' );
+define( 'NCBW_VERSION', '1.5.7' );
 
 /* Opt-in */
 require_once NCBW_DIR . 'includes/class-optin.php';
